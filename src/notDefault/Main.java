@@ -128,7 +128,7 @@ public class Main {
         
         for(int a = 0; a < side; a++) {
     		for(int b = 0; b < side; b++) {
-    			output.print(answer[a][b]);
+    			output.print(answer[a][b] + ",");
     			/*if(out[a][b] == ' ') {
     			    output.print((char)(26 * Math.random() + 97));
     			}else {
