@@ -1,19 +1,29 @@
 # Word-Search
 It generates word search puzzles. It appears to usually work.
 
-Type words in in.txt and separate the words with line breaks. Run the thing, and then read out.txt. For example, 
+Type words in words.txt and separate the words with line breaks. Run the thing, and then read answer.txt and puzzle.txt. For example, 
 
-    silky
-	poison
-	bone
-	mix
+  silky
+  poison
+  bone
+  mix
 
 outputs 
 
-    qcymixw
-    snbxssp
-    bhnjmij
-    oyiceln
-    ncizckj
-    erwaiym
-    poisonh
+  pb     
+   o   m 
+   ni  i 
+   e s x 
+      o  
+       n 
+  silky 
+  
+and
+
+  pbbquqa
+  tohsimq
+  wnizfia
+  jeesnxn
+  niowods
+  jiflknc
+  silkysx

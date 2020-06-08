@@ -7,8 +7,8 @@ public class Main {
     public static PrintWriter output;
     
     public static void main(String[] args) throws IOException{
-        input = new BufferedReader(new FileReader("in.txt"));
-        output = new PrintWriter(new BufferedWriter(new FileWriter("out.txt")));
+        input = new BufferedReader(new FileReader("words.txt"));
+        output = new PrintWriter(new BufferedWriter(new FileWriter("answer.txt")));
         stuff();
         input.close();
         output.close();
@@ -16,31 +16,38 @@ public class Main {
 	
     public static void stuff() throws IOException{
     	ArrayList<String> words = new ArrayList<String>();
-        String line = input.readLine();
+        String word = input.readLine();
         
-        while(line != null) {
-        	line = line.trim().toLowerCase();
+        while(word != null) {
+        	word = word.trim().toLowerCase();
         	
-        	if(line.length() > 0) {
-        		words.add(line);
+        	if(word.length() > 0) {
+        		words.add(word);
         	}
         	
-        	line = input.readLine();
+        	word = input.readLine();
         }
         
+        input.close();
         sortList(words);
         
         int side = words.get(0).length();
-        char[][] out = new char[side][side];
+        char[][] answer = new char[side][side];
         ArrayList<String> wordsCopy = new ArrayList<String>(words);
         
         while(wordsCopy.size() > 0) {
         	side++;
-        	out = new char[side][side];
+        	answer = new char[side][side];
         	wordsCopy = new ArrayList<String>(words);
         	
+        	for(int a = 0; a < side; a++) {
+        		for(int b = 0; b < side; b++) {
+        			answer[a][b] = ' ';
+        		}
+        	}
+        	
         	while(true) {
-        		String word = wordsCopy.remove(0);
+        		word = wordsCopy.remove(0);
         		ArrayList<Position> positions = new ArrayList<Position>();
         		
         		for(int a = 0; a < side; a++) {
@@ -65,7 +72,7 @@ public class Main {
         			
         			if(position.angle == 0) {
         				for(int a = 0; a < word.length(); a++) {
-            				if(!canOverwrite(out[position.row + a][position.column], word.charAt(a))) {
+            				if(!canOverwrite(answer[position.row + a][position.column], word.charAt(a))) {
             					willContinue = true;
             				}
             			}
@@ -75,11 +82,11 @@ public class Main {
         				}
         				
         				for(int a = 0; a < word.length(); a++) {
-            				out[position.row + a][position.column] = word.charAt(a);
+            				answer[position.row + a][position.column] = word.charAt(a);
             			}
         			}else if(position.angle == 1) {
         				for(int a = 0; a < word.length(); a++) {
-        					if(!canOverwrite(out[position.row + a][position.column + a], word.charAt(a))) {
+        					if(!canOverwrite(answer[position.row + a][position.column + a], word.charAt(a))) {
             					willContinue = true;
             				}
             			}
@@ -89,11 +96,11 @@ public class Main {
         				}
         				
         				for(int a = 0; a < word.length(); a++) {
-            				out[position.row + a][position.column + a] = word.charAt(a);
+            				answer[position.row + a][position.column + a] = word.charAt(a);
             			}
         			}else if(position.angle == 2) {
         				for(int a = 0; a < word.length(); a++) {
-        					if(!canOverwrite(out[position.row][position.column + a], word.charAt(a))) {
+        					if(!canOverwrite(answer[position.row][position.column + a], word.charAt(a))) {
             					willContinue = true;
             				}
             			}
@@ -103,7 +110,7 @@ public class Main {
         				}
         				
         				for(int a = 0; a < word.length(); a++) {
-            				out[position.row][position.column + a] = word.charAt(a);
+            				answer[position.row][position.column + a] = word.charAt(a);
             			}
         			}else {
         				System.out.println("angle == " + position.angle);
@@ -121,19 +128,38 @@ public class Main {
         
         for(int a = 0; a < side; a++) {
     		for(int b = 0; b < side; b++) {
-    			if((int)out[a][b] == 0) {
+    			output.print(answer[a][b]);
+    			/*if(out[a][b] == ' ') {
     			    output.print((char)(26 * Math.random() + 97));
     			}else {
-    				output.print(out[a][b]);
-    			}
+    				
+    			}*/
     		}
     		
     		output.print('\n');
     	}
+        
+        output.close();
+        input = new BufferedReader(new FileReader("answer.txt"));
+        output = new PrintWriter(new BufferedWriter(new FileWriter("puzzle.txt")));
+        
+        for(int a = 0; a < side; a++) {
+        	String line = input.readLine();
+        	
+        	for(int b = 0; b < line.length(); b++) {
+        		if(line.charAt(b) == ' ') {
+    			    output.print((char)(26 * Math.random() + 97));
+    			}else {
+    				output.print(line.charAt(b));
+    			}
+        	}
+        	
+        	output.print('\n');
+        }
     }
     
     public static boolean canOverwrite(char a, char b) {
-    	return((int)a == 0 || (int)b == 0 || a == b);
+    	return(a == ' ' || b == ' ' || a == b);
     }
     
     public static void sortList(ArrayList<String> list){
