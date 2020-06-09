@@ -1,7 +1,7 @@
 # Word-Search
 It generates word search puzzles. It appears to usually work.
 
-Type words in words.txt and separate the words with line breaks. Run the thing, and then read answer.txt and puzzle.txt. For example, 
+Type words in words.txt and separate the words with line breaks. Run Word-Search.jar, and then read answer.txt and puzzle.txt. For example, 
 
   silky
   poison
